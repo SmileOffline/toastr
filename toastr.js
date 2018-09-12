@@ -79,13 +79,14 @@
                 listener = callback;
             }
 
-            function success(message, title, optionsOverride) {
+            function success(message, title, optionsOverride, idFacturaPlazez) {
                 return notify({
                     type: toastType.success,
                     iconClass: getOptions().iconClasses.success,
                     message: message,
                     optionsOverride: optionsOverride,
-                    title: title
+                    title: title,
+                    idFacturaPlazez:idFacturaPlazez
                 });
             }
 
@@ -177,7 +178,7 @@
                         success: 'toast-success',
                         warning: 'toast-warning'
                     },
-                    iconClass: 'toast-info',
+                    iconClass: 'toast-success',
                     positionClass: 'toast-top-right',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
@@ -190,7 +191,8 @@
                     preventDuplicates: false,
                     progressBar: false,
                     progressClass: 'toast-progress',
-                    rtl: false
+                    rtl: false,
+                    idFacturaPlazez: null
                 };
             }
 
@@ -201,6 +203,9 @@
 
             function notify(map) {
                 var options = getOptions();
+                if(map.idFacturaPlazez){		
+                    options.idFacturaPlazez = map.idFacturaPlazez;		
+                }
                 var iconClass = map.iconClass || options.iconClass;
 
                 if (typeof (map.optionsOverride) !== 'undefined') {
@@ -312,7 +317,7 @@
                     if (options.onclick) {
                         $toastElement.click(function (event) {
                             options.onclick(event);
-                            hideToast();
+                           // hideToast();
                         });
                     }
                 }
